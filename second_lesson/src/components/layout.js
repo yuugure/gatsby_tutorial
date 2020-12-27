@@ -7,11 +7,24 @@
 
 import React from "react"
 import PropTypes from "prop-types"
+import styled from "styled-components"
 import { useStaticQuery, graphql } from "gatsby"
 
+import GlobalStyle from './globalStyle'
 import Header from "./header"
 import Footer from "./footer"
-import "./layout.css"
+
+const StyledLayout = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  #main-content {
+    width: 100%;
+    max-width: 62.5rem;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+`
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -25,19 +38,12 @@ const Layout = ({ children }) => {
   `)
 
   return (
-    <>
+    <StyledLayout>
+      <GlobalStyle />
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
       <Footer />
-      </div>
-    </>
+    </StyledLayout>
   )
 }
 
